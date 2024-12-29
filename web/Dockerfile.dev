@@ -1,0 +1,21 @@
+FROM node:20-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files first (for better caching)
+COPY package*.json ./
+RUN npm install
+
+# Install global dependencies for TypeScript development
+RUN npm install -g typescript ts-node nodemon
+
+# Copy the rest of the application files
+COPY . .
+
+# Expose the port your Express app will run on
+EXPOSE 3000
+
+# Start the application with nodemon for hot reloading
+CMD ["nodemon", "-e", "ts", "--exec", "ts-node src/index.ts"]
+

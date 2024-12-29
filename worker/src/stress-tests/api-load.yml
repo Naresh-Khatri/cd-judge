@@ -1,0 +1,26 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      rampTo: 50
+      name: "Ramping up load"
+  payload:
+    path: "test-cases.json"
+    fields:
+      - "code"
+      - "lang"
+scenarios:
+  - name: "Execute code submissions"
+    flow:
+      - post:
+          url: "/execute"
+          json:
+            code: "{{ code }}"
+            lang: "{{ lang }}"
+          capture:
+            - json: "$.jobId"
+              as: "jobId"
+      - think: 1
+      - get:
+          url: "/status/{{ jobId }}"

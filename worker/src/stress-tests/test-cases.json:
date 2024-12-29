@@ -1,0 +1,18 @@
+[
+  {
+    "code": "print('Hello, World!')",
+    "lang": "py"
+  },
+  {
+    "code": "console.log('Hello, World!')",
+    "lang": "js"
+  },
+  {
+    "code": "public class Main { public static void main(String[] args) { System.out.println('Hello, World!'); }}",
+    "lang": "java"
+  },
+  {
+    "code": "#include <iostream>\nint main() { std::cout << \"Hello, World!\"; return 0; }",
+    "lang": "cpp"
+  }
+]

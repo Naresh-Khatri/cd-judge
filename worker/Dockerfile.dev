@@ -1,0 +1,57 @@
+FROM ubuntu:22.04
+
+# Avoid prompts from apt
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies and Node.js (add Node.js PPA to ensure latest version)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    openjdk-21-jdk \
+    g++ \
+    build-essential \
+    make \
+    git \
+    sudo \
+    pkg-config \
+    libsystemd-dev \
+    libcap-dev \
+    curl && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean -y && \
+    apt-get remove -y --auto-remove && \
+    apt-get remove -y --purge && \
+    rm -rf /var/cache/apt/* /var/lib/apt/lists/* /tmp/*
+
+
+
+# Clone and install isolate
+COPY install-isolate.sh .
+RUN chmod +x install-isolate.sh && ./install-isolate.sh
+
+# CMD ["isolate", "--version"]
+
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json files and install dependencies
+COPY package*.json . 
+RUN npm install
+
+# Install global dependencies (nodemon and typescript)
+RUN npm install -g nodemon typescript
+
+# Copy the rest of the application files
+COPY . .
+
+# Create a non-root user for safety
+# RUN useradd -m coderunner
+# USER coderunner
+
+# Entrypoint or CMD can be customized later
+CMD ["/bin/bash"]
+
+# Set default command to run the app
+CMD ["nodemon", "--watch", "src", "--ext", "ts", "--exec", "npm run dev"]
+

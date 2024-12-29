@@ -1,0 +1,29 @@
+{
+  "name": "cd-worker",
+  "version": "1.0.0",
+  "description": "Code execution worker",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "test": "vitest src"
+  },
+  "dependencies": {
+    "amqplib": "^0.10.5",
+    "ioredis": "^5.4.1",
+    "vitest": "^2.1.8"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.10.6",
+    "@types/artillery": "^1.7.4",
+    "@types/ioredis": "^5.0.0",
+    "@types/node": "^18.15.11",
+    "artillery": "^2.0.21",
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}

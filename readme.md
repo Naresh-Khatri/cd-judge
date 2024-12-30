@@ -19,6 +19,9 @@ This project was born from the need for a more robust code execution system to r
 
 usage coming soon
 
+## Live Demo
+You can access the live version of the application at [judge.codingducks.xyz](http://judge.codingducks.xyz).
+
 ## API Endpoints
 
 ## 1. Execute Code
@@ -93,6 +96,7 @@ usage coming soon
       "error": "string" // Error message detailing the issue
     }
     ```
+
 
 ## Getting Started
 

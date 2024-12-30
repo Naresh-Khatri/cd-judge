@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { json } from "body-parser";
 import { randomUUID } from "crypto";
-import { validateRequest } from "./middleware";
+import { allowCORS, validateRequest } from "./middleware";
 import { TASK_QUEUE } from "./constants";
 import { getRabbitMQChannel, getRedisClient } from "./utils/clients";
 
@@ -9,6 +9,7 @@ const app = express();
 
 // Middleware
 app.use(json({ limit: "1mb" }));
+app.use(allowCORS);
 
 // Execute code endpoint
 app.post("/execute", [validateRequest], async (req: Request, res: Response) => {
@@ -51,7 +52,7 @@ app.post("/execute", [validateRequest], async (req: Request, res: Response) => {
       persistent: true,
     });
     if (!wait) {
-      res.json({ jobId, status: "queued" });
+      res.json({ id: jobId, status: "queued" });
       return;
     }
     // this just a placeholder for now
